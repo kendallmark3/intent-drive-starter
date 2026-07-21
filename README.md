@@ -22,6 +22,8 @@ Learn the methodology in depth at **[learnteachmaster.org](https://learnteachmas
 
 ![Intent-Driven Engineering architecture diagram](docs/images/architecture.png)
 
+[View the interactive version](docs/architecture.html) (open locally, or enable GitHub Pages on this repo to serve it live).
+
 Every arrow into the loop originates from a stated intent, and every exit from the loop (QA, review, CI) checks back against that same intent — not just against the diff.
 
 <details>
