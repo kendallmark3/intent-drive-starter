@@ -1,0 +1,19 @@
+{
+  "name": "intent-drive-starter",
+  "version": "1.0.0",
+  "description": "A starter template for Intent-Driven Software Engineering",
+  "main": "src/example.js",
+  "scripts": {
+    "test": "node tests/example.test.js",
+    "lint": "npx --yes standard src/ tests/"
+  },
+  "keywords": [
+    "intent-driven",
+    "software-engineering",
+    "starter",
+    "ai-assisted",
+    "copilot"
+  ],
+  "author": "",
+  "license": "MIT"
+}
