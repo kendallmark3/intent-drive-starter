@@ -20,6 +20,13 @@ Learn the methodology in depth at **[learnteachmaster.org](https://learnteachmas
 
 ## Architecture
 
+![Intent-Driven Engineering architecture diagram](docs/images/architecture.png)
+
+Every arrow into the loop originates from a stated intent, and every exit from the loop (QA, review, CI) checks back against that same intent — not just against the diff.
+
+<details>
+<summary>Mermaid source (renders inline on GitHub)</summary>
+
 ```mermaid
 flowchart TD
     PI["intent/project-intent.md<br/>Purpose · Business Outcomes · Constraints"]
@@ -55,7 +62,7 @@ flowchart TD
     CI --> SHIP(["Shipped"])
 ```
 
-Every arrow into the loop originates from a stated intent, and every exit from the loop (QA, review, CI) checks back against that same intent — not just against the diff.
+</details>
 
 ## Getting started
 
