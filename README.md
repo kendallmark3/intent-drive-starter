@@ -4,6 +4,8 @@
 
 Most AI coding workflows start with a prompt and hope the model infers what you meant. Intent-Driven Engineering flips that: you write the *intent* down first, and every agent, hook, and check in this repo reads that intent before it touches code.
 
+![The Progressive Intent loop: Intent, Plan, Build, Observe, Validate, Refine, then Continue or Stop](docs/images/progressive-intent-loop.png)
+
 Learn the methodology in depth at **[learnteachmaster.org](https://learnteachmaster.org)** and **[intent-driven-engineering.com](https://intent-driven-engineering.com)**.
 
 ## Install
