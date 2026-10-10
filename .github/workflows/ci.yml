@@ -5,4 +5,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: echo "Add build/test steps"
+      - run: bash tests/pre-implement.test.sh

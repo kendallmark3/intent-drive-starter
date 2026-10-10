@@ -1,0 +1,10 @@
+{
+  "name": "intent-drive-starter",
+  "description": "Intent-Driven Engineering starter with Progressive Intent as the default operating model: small intent, build, observe, refine, continue or stop.",
+  "version": "2.0.0",
+  "author": {
+    "name": "Mark Kendall"
+  },
+  "homepage": "https://intent-driven-engineering.com",
+  "repository": "https://github.com/kendallmark3/intent-drive-starter"
+}

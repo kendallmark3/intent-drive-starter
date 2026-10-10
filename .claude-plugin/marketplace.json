@@ -1,0 +1,14 @@
+{
+  "name": "intent-drive-starter",
+  "owner": {
+    "name": "Mark Kendall"
+  },
+  "description": "The Intent-Driven Engineering starter, installable as a Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "intent-drive-starter",
+      "source": "./",
+      "description": "Progressive Intent for any repository: write a small intent, build the smallest useful delta, observe, refine, continue or stop."
+    }
+  ]
+}

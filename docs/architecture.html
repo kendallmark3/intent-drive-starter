@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Intent-Driven Engineering — System Architecture</title>
-<meta name="description" content="A blueprint-style architecture diagram of the intent-driven engineering loop, and the case for why teams should adopt it.">
+<meta name="description" content="A blueprint-style architecture diagram of the Progressive Intent loop, and the case for why teams should adopt it.">
 <style>
   :root {
     --ink: #0C1F2E;
@@ -364,6 +364,28 @@
     line-height: 1.5;
   }
 
+  /* ---------- Install ---------- */
+  .install {
+    border: 1px solid var(--signal-2);
+    background: var(--ink-2);
+    padding: 1rem 1.2rem;
+    margin-bottom: 3.5rem;
+  }
+  .install code {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--paper);
+    overflow-wrap: anywhere;
+  }
+  .install p {
+    margin: 0.7rem 0 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
   @media (max-width: 560px) {
     .title-block { grid-template-columns: 1fr 1fr; }
   }
@@ -372,33 +394,47 @@
 <body>
 <div class="page">
 
-  <p class="eyebrow">Architecture / Intent-Driven Engineering / Rev. 01</p>
-  <h1>Every change traces back to a written intent — nothing ships that can't be pointed at a reason.</h1>
+  <p class="eyebrow">Architecture / Intent-Driven Engineering / Rev. 02</p>
+  <h1>Start with the smallest useful intent. Build it, look at it, then decide: continue or stop.</h1>
   <p class="lede">
     Most AI-assisted workflows start from a prompt and hope the model inferred the right thing. This starter
-    inverts that: the business outcome, the constraints, and the acceptance criteria get written down
-    <em>before</em> planning starts, and every agent and hook downstream is wired to check its work against
-    that document — not against a diff, and not against a guess.
+    asks for two things up front: the outcome, and how success will be judged. It builds the smallest change
+    worth looking at, and what the human sees in the running result becomes the next small change
+    <em>instead of</em> a bigger specification.
   </p>
 
   <div class="title-block">
-    <div><span>Drawing</span><strong>Intent Loop — v1</strong></div>
-    <div><span>Repo</span><strong>intent-driven-engineering-starter</strong></div>
-    <div><span>Date</span><strong>2026-07-21</strong></div>
+    <div><span>Drawing</span><strong>Progressive Intent Loop — v2</strong></div>
+    <div><span>Repo</span><strong>intent-drive-starter</strong></div>
+    <div><span>Date</span><strong>2026-10-10</strong></div>
     <div class="status"><span>Status</span><strong>Canonical — start here</strong></div>
+  </div>
+
+  <h2>The operating model</h2>
+  <div class="manifest">
+    <div class="card">
+      <div class="label">Equation</div>
+      <span class="path">Repository State + Next Intent = Next Repository State</span>
+      <p>The repository is the source of current-state truth. The human does not restate what the code, tests, and context already say.</p>
+    </div>
+    <div class="card">
+      <div class="label">Working loop</div>
+      <span class="path">Intent → Build → Observe → Learn → Refine → Continue or Stop</span>
+      <p>The human owns the outcome, the boundaries, and the decision. The AI owns the reasoning, the plan, and the implementation.</p>
+    </div>
   </div>
 
   <h2>Shared supply — read by the loop, not part of it</h2>
   <div class="manifest">
     <div class="card">
-      <div class="label">context/</div>
-      <span class="path">architecture · business-rules · glossary · integrations · security</span>
-      <p>The living reference every agent checks before writing, testing, or reviewing — so implementation never drifts from how the system actually works.</p>
+      <div class="label">Repository state</div>
+      <span class="path">code · tests · context/</span>
+      <p>What already exists. <code>context/</code> holds only what the code cannot show: architecture, business rules, glossary, integrations, security.</p>
     </div>
     <div class="card">
       <div class="label">templates/</div>
-      <span class="path">feature · bug · ADR</span>
-      <p>Fixed shapes for capturing intent, defects, and architecture decisions, so nothing gets lost to a differently-organized doc each time.</p>
+      <span class="path">feature · delta · bug · ADR</span>
+      <p>Fixed shapes for an intent, the delta that follows an observation, a defect, and an architecture decision.</p>
     </div>
   </div>
 
@@ -425,7 +461,7 @@
         </div>
         <h3 class="node-title">Current Feature</h3>
         <span class="node-path">intent/current-feature.md</span>
-        <p class="node-desc">Outcome, requirements, constraints, and acceptance criteria for this specific unit of work. Every node below either produces from this or is checked against it.</p>
+        <p class="node-desc">Outcome and Success / Evidence are enough to start. Inputs, outputs, and boundaries are added only when they are real. Deltas from later cycles are appended here; the original intent is never rewritten.</p>
       </div>
     </li>
 
@@ -433,11 +469,11 @@
       <div class="node">
         <div class="node-head">
           <span class="node-id">N03</span>
-          <span class="node-stage">Plan</span>
+          <span class="node-stage">Gate</span>
         </div>
-        <h3 class="node-title">Planner Agent</h3>
-        <span class="node-path">agents/planner.md · skills/feature-planner.md</span>
-        <p class="node-desc">Breaks N02 into implementation steps. A step that doesn't trace back to the stated intent doesn't get planned.</p>
+        <h3 class="node-title">Pre-Implement Hook</h3>
+        <span class="node-path">hooks/pre-implement.sh · hooks/hooks.json</span>
+        <p class="node-desc">Blocks code edits until N02 states an outcome and how success will be evidenced. It checks that the intent is sufficient, not that it is a complete specification. Markdown is never blocked.</p>
       </div>
     </li>
 
@@ -445,11 +481,12 @@
       <div class="node">
         <div class="node-head">
           <span class="node-id">N04</span>
-          <span class="node-stage">Gate</span>
+          <span class="node-stage">Build</span>
         </div>
-        <h3 class="node-title">Pre-Implement Hook</h3>
-        <span class="node-path">hooks/pre-implement.md</span>
-        <p class="node-desc">Validates that intent is actually confirmed before a single line of code gets written. This is the check that stops "start coding and figure it out" cold.</p>
+        <h3 class="node-title">Smallest Useful Delta</h3>
+        <span class="node-path">skills/feature-planner · agents/planner.md · agents/developer.md</span>
+        <p class="node-desc">Reads repository state and the intent, then builds the smallest change worth looking at. The approach belongs to the AI unless the intent sets a boundary.</p>
+        <div class="refs"><span class="ref-chip">reads repository state</span></div>
       </div>
     </li>
 
@@ -457,12 +494,11 @@
       <div class="node">
         <div class="node-head">
           <span class="node-id">N05</span>
-          <span class="node-stage">Build</span>
+          <span class="node-stage">Verify</span>
         </div>
-        <h3 class="node-title">Developer Agent</h3>
-        <span class="node-path">agents/developer.md</span>
-        <p class="node-desc">Implements against the plan and the shared context below — never against its own assumptions about how the system works.</p>
-        <div class="refs"><span class="ref-chip">reads context/</span></div>
+        <h3 class="node-title">Post-Implement Hook + QA Agent</h3>
+        <span class="node-path">hooks/post-implement.md · agents/qa.md</span>
+        <p class="node-desc">Runs tests, updates docs, and checks the result against the evidence N02 asked for, before it is handed to the human.</p>
       </div>
     </li>
 
@@ -470,24 +506,24 @@
       <div class="node">
         <div class="node-head">
           <span class="node-id">N06</span>
-          <span class="node-stage">Verify</span>
+          <span class="node-stage">Observe</span>
         </div>
-        <h3 class="node-title">Post-Implement Hook + QA Agent</h3>
-        <span class="node-path">hooks/post-implement.md · agents/qa.md</span>
-        <p class="node-desc">Runs tests and updates docs before the change is allowed to be considered finished. Nothing skips this step to save time.</p>
-        <div class="refs"><span class="ref-chip">reads context/</span></div>
+        <h3 class="node-title">Human Observation</h3>
+        <span class="node-path">the running result</span>
+        <p class="node-desc">The human looks at what was actually built and says what they think in ordinary words: keep this, change that, this is too busy, don't touch the backend.</p>
       </div>
     </li>
 
     <li>
-      <div class="node">
+      <div class="node origin">
         <div class="node-head">
           <span class="node-id">N07</span>
-          <span class="node-stage">Gate</span>
+          <span class="node-stage">Decide</span>
         </div>
-        <h3 class="node-title">Pre-PR Hook</h3>
-        <span class="node-path">hooks/pre-pr.md</span>
-        <p class="node-desc">Verifies checks are actually green before a pull request is allowed to exist — a second gate, not a rerun of the first.</p>
+        <h3 class="node-title">Continue or Stop</h3>
+        <span class="node-path">skills/progressive-intent · templates/delta-template.md</span>
+        <p class="node-desc">Every cycle ends here. Continue: the observation becomes a delta (Observation, Keep, Change, New Boundary, Evidence) and the loop runs again. Stop: the work moves on to review.</p>
+        <div class="callback">↑ Continue — append a delta to N02 and return to N03</div>
       </div>
     </li>
 
@@ -497,9 +533,9 @@
           <span class="node-id">N08</span>
           <span class="node-stage">Review</span>
         </div>
-        <h3 class="node-title">Reviewer Agent</h3>
-        <span class="node-path">agents/reviewer.md</span>
-        <p class="node-desc">Confirms the change satisfies N02's acceptance criteria — not just that it compiles, passes CI, and looks reasonable in a diff.</p>
+        <h3 class="node-title">Pre-PR Hook + Reviewer Agent</h3>
+        <span class="node-path">hooks/pre-pr.md · agents/reviewer.md</span>
+        <p class="node-desc">On Stop. Verifies checks are green and reviews the change against the intent and its deltas, not just the diff.</p>
         <div class="callback">↑ checked against N02 — Current Feature</div>
       </div>
     </li>
@@ -512,7 +548,7 @@
         </div>
         <h3 class="node-title">CI Pipeline</h3>
         <span class="node-path">.github/workflows/ci.yml</span>
-        <p class="node-desc">The last automated gate before merge — by the time code reaches it, it has already been checked against intent twice.</p>
+        <p class="node-desc">The last automated gate before merge.</p>
       </div>
     </li>
 
@@ -523,38 +559,51 @@
     <div class="prop">
       <span class="mark"></span>
       <div>
-        <h3>Traceability, not archaeology</h3>
-        <p>Every diff points back to a written outcome and a set of acceptance criteria. No one has to reconstruct "why was this built" from commit messages six months later.</p>
+        <h3>Start small, not fully specified</h3>
+        <p>An outcome and a way to judge it are enough to begin. Nobody has to predict the requirements, the architecture, and every acceptance criterion before seeing anything.</p>
       </div>
     </div>
     <div class="prop">
       <span class="mark"></span>
       <div>
-        <h3>Validation happens before code, not after</h3>
-        <p>The pre-implement hook physically blocks work from starting until intent is confirmed — the gate exists before the expensive part of the loop, not after it.</p>
+        <h3>The human judges results, not plans</h3>
+        <p>Feedback is given on something running, in plain language. The human never has to prescribe the implementation to get the change they want.</p>
       </div>
     </div>
     <div class="prop">
       <span class="mark"></span>
       <div>
-        <h3>Context stays living, not stale</h3>
-        <p>Architecture, business rules, and security constraints live in one place every agent reads from — so "the docs were out of date" stops being the excuse for a bad implementation.</p>
+        <h3>Deltas, not rewrites</h3>
+        <p>Each iteration records only what changed and what must stay. The history of the feature reads as a short chain of observations instead of a specification edited in place.</p>
       </div>
     </div>
     <div class="prop">
       <span class="mark"></span>
       <div>
-        <h3>One loop, whether it's agents or humans</h3>
-        <p>The same nine steps apply whether an AI agent or a person is doing the work. Swapping in more automation later doesn't mean rebuilding the process.</p>
+        <h3>One deterministic gate before code</h3>
+        <p>The pre-implement hook enforces a rule a script can check. It does not dictate how the AI reasons or plans.</p>
       </div>
     </div>
     <div class="prop">
       <span class="mark"></span>
       <div>
-        <h3>Review checks intent, not just syntax</h3>
-        <p>The reviewer's job is to verify the acceptance criteria were met — a change can pass every test and still fail review if it solved the wrong problem.</p>
+        <h3>Every cycle ends in a decision</h3>
+        <p>Continue or stop is asked explicitly, so work ends when another change would no longer produce value.</p>
       </div>
     </div>
+    <div class="prop">
+      <span class="mark"></span>
+      <div>
+        <h3>Discipline is kept, applied when justified</h3>
+        <p>Architecture, testing, security, documentation, QA, review, and CI all remain. They are brought in when the problem and the evidence call for them, not guessed at in the first intent.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Install</h2>
+  <div class="install">
+    <code>claude plugin marketplace add kendallmark3/intent-drive-starter &amp;&amp; claude plugin install intent-drive-starter@intent-drive-starter</code>
+    <p>Then, in any project: <strong>/intent-drive-starter:start</strong> followed by the outcome you want.</p>
   </div>
 
   <footer>
