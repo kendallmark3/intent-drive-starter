@@ -112,6 +112,14 @@ expect_gate 2 "hook blocks code edits while the intent is blank" "$tmp/blank" "$
 expect_gate 0 "hook never blocks Markdown, so the intent can be written" "$tmp/blank" "$tmp/blank/intent/current-feature.md"
 expect_gate 0 "hook allows code edits once the intent is sufficient" "$tmp/ready" "$tmp/ready/src/app.py"
 
+mkdir -p "$tmp/starter/intent" "$tmp/starter/.claude-plugin" "$tmp/other-plugin/intent" "$tmp/other-plugin/.claude-plugin"
+cp "$root/templates/feature-template.md" "$tmp/starter/intent/current-feature.md"
+cp "$root/templates/feature-template.md" "$tmp/other-plugin/intent/current-feature.md"
+cp "$root/.claude-plugin/plugin.json" "$tmp/starter/.claude-plugin/plugin.json"
+echo '{ "name": "some-other-plugin" }' >"$tmp/other-plugin/.claude-plugin/plugin.json"
+expect_gate 0 "hook skips the starter's own repository" "$tmp/starter" "$tmp/starter/hooks/x.sh"
+expect_gate 2 "hook still gates other plugin repositories" "$tmp/other-plugin" "$tmp/other-plugin/src/app.py"
+
 if [ "$failures" -ne 0 ]; then
   echo "$failures test(s) failed"
   exit 1
