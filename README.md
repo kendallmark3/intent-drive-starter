@@ -22,6 +22,8 @@ Then, in any project, start a Claude Code session and run:
 
 That creates `intent/current-feature.md` in your project, records the outcome and how success will be judged, and builds the first thing you can look at. The scripts need `bash`.
 
+See [install-plugin.md](install-plugin.md) for the full install guide and everything the plugin gives you.
+
 Prefer the files in your own repo? Clone or copy this repository instead and use it as the scaffold; see [Getting started](#getting-started).
 
 ## The operating model
